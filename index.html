@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Swarm Sim</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="css/TemplateData-unityWebGL.css">
+
+    <script src="js/javascripts-kongregate_api.js"></script>
+    <script type="text/javascript" src="js/tweenjs-0.6.0.min.js"></script>
+    <script type="text/javascript" src="js/9130-TemplateData-CSSPlugin.js"></script>
+    <script type="text/javascript" src="js/7562-TemplateData-UnityProgress.js"></script>
+    <script src="js/5055-Build-UnityLoader.js"></script>
+    <script>
+      var gameInstance = UnityLoader.instantiate("game", "Build/WebGL.json", {
+        onProgress: UnityProgress, 
+        Module: {
+          backgroundColor: "#000000",
+          onRuntimeInitialized: function () {
+            UnityProgress(gameInstance, "complete");
+          }
+        }});
+
+      window.SendMessage = gameInstance.SendMessage;
+
+      window.addEventListener("resize", resizeCanvas, false);
+
+      function unityLoaded(){
+        resizeCanvas();
+      }
+
+      function resizeCanvas(){
+        var gameDiv = document.getElementById("game"); 
+        var canvas = document.getElementById("#canvas");
+
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+
+        var pointWidth = Math.round(windowWidth);
+        var pointHeight = Math.round(pointWidth / 1.6);
+
+        if(pointHeight > windowHeight){
+          pointHeight = windowHeight;
+          pointWidth = pointHeight * 1.6;
+        }
+
+        gameDiv.setAttribute("style","width: "+pointWidth+"px;height:"+pointHeight+"px;");
+      
+        canvas.height = pointHeight;
+        canvas.width = pointWidth;
+      }
+    </script>
+  </head>
+  <body>
+    <div id="game" style="background: black;"></div>
+    <div id="loadingBox">
+      <img id="logo" src="images/TemplateData-logo-small.png">      
+      <div id="bgBar"></div>
+      <div id="progressBar"></div>
+      <p id="loadingInfo">Loading...</p>
+    </div>
+  </body>
+</html>
